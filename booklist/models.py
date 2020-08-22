@@ -12,19 +12,18 @@ class book(models.Model):
     wordCount = models.IntegerField(null=True, blank=True)
     bookType = models.CharField(max_length = 50, default='', blank=True)
     genre = models.CharField(max_length = 50, default='', blank=True)
-    summary = models.CharField(max_length = 1000, default='', blank=True)
+    summary = models.TextField(default='', blank=True)
     chapters = models.IntegerField(null=True, blank=True)
 
-    def __str__(self) :
-        return self.title
+    def __int__(self) :
+        return self.bookID
 
 class bookList(models.Model):
     bookListID = models.IntegerField(primary_key=True)
-    userID = models.IntegerField()
-    bookID = models.IntegerField()
+    owner = models.ForeignKey(User, related_name="booklist", on_delete=models.CASCADE)
+    bookID = models.ForeignKey('book', on_delete=models.CASCADE)
     bookRating = models.IntegerField(blank=True)
     chaptersRead = models.IntegerField(blank=True)
-    owner = models.ForeignKey(User, related_name="booklist", on_delete=models.CASCADE, null=True)
 
-    def __str__(self) :
-        return self.userID
+    def __int__(self) :
+        return self.bookListID

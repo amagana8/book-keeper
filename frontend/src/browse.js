@@ -21,6 +21,10 @@ const Browse = () => {
                     res.data.map(row => ({
                         Title: row.title,
                         Author: row.author,
+                        Language: row.language,
+                        wordCount: row.wordCount,
+                        BookType: row.bookType,
+                        Genre: row.genre,
                         id: row.bookID
                     }))
                 );
@@ -37,18 +41,40 @@ const Browse = () => {
         {
             title: "Author",
             dataIndex: "Author",
-            width: 150
+            width: 120
+        },
+        {
+            title: "Language",
+            dataIndex: "Language",
+            width: 100
+        },
+        {
+            title: "Word Count",
+            dataIndex: "wordCount",
+            width: 100
+        },
+        {
+            title: "Type",
+            dataIndex: "BookType",
+            width: 100
+        },
+        {
+            title: "Genre",
+            dataIndex: "Genre",
+            width: 100
         }
     ];
 
     return (
-        <div className="App">
+        <div className="Browse">
             <Layout>
                 <Header>
                     <div className="logo" />
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
                         <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
                         <Menu.Item key="2"><Link to="/browse">Browse</Link></Menu.Item>
+                        <Menu.Item key="3"><Link to="/myList">My List</Link></Menu.Item>
+                        <Menu.Item key="4"><Link to="/addBook">Add Book</Link></Menu.Item>
                     </Menu>
                 </Header>
                 <Content>
