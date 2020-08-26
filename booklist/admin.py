@@ -6,7 +6,7 @@ class bookAdmin(admin.ModelAdmin):
     list_display = ('bookID', 'title', 'title2', 'author', 'language', 'ISBN', 'wordCount', 'bookType', 'genre', 'summary', 'chapters')
 
 class bookListAdmin(admin.ModelAdmin):
-    list_display = ('bookListID', 'owner', 'bookID', 'bookRating', 'chaptersRead')
+    list_display = ('bookListID', 'owner', 'bookTitle', 'bookRating', 'chaptersRead', 'status')
 
 admin.site.register(book, bookAdmin)
 admin.site.register(bookList, bookListAdmin)

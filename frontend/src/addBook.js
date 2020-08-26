@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import './App.css';
 import {Layout, Menu, Form, Input, InputNumber, Button} from 'antd';
 
-const {Header, Content, Footer} = Layout;
+const {Header, Content} = Layout;
 
 const layout = {
     labelCol: { span: 8 },
@@ -13,19 +13,15 @@ const layout = {
 const validateMessages = {
     required: '${label} is required!',
     types: {
-      email: '${label} is not validate email!',
       number: '${label} is not a validate number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
+    }
 };
 
 const AddBook = () => {
     async function onFinish(values) {
 
     };
-    
+
     return (
         <div className="AddBook">
           <Layout>
@@ -76,9 +72,6 @@ const AddBook = () => {
                     </Form.Item>
                 </Form>
             </Content>
-            <Footer>
-    
-            </Footer>
           </Layout>
         </div>
       );

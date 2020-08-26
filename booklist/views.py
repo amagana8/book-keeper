@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .serializers import bookSerializer, bookListSerializer
 from .models import book, bookList
 # Create your views here.
@@ -10,4 +10,10 @@ class bookView(viewsets.ModelViewSet):
 
 class bookListView(viewsets.ModelViewSet):
     serializer_class = bookListSerializer
-    queryset = bookList.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return self.request.user.booklist.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)  

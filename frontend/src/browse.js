@@ -4,7 +4,7 @@ import './App.css';
 import {Layout, Menu, Table} from 'antd';
 import axios from 'axios';
 
-const {Header, Content, Footer} = Layout;
+const {Header, Content} = Layout;
 
 const Browse = () => {
     const [state, setstate] = useState([]);
@@ -91,9 +91,6 @@ const Browse = () => {
                         )}
                     </div>
                 </Content>
-                <Footer>
-    
-                </Footer>
             </Layout>
         </div>
     );

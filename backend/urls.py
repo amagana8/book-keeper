@@ -24,5 +24,6 @@ router.register(r'bookList', views.bookListView, 'bookList')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/auth/', include('accounts.api.urls')),
     path('api/', include(router.urls))
 ]
