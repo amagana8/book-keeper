@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Link, BrowserRouter as Router} from 'react-router-dom';
+import {Route, BrowserRouter as Router} from 'react-router-dom';
 import {Switch} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import Browse from './browse';
@@ -8,13 +8,14 @@ import AddBook from './addBook';
 import Login from './login';
 import Register from './register';
 import Logout from './logout';
+import AddBookToList from './addBookToList';
 import './App.css';
-import logo from'./bookKeeper.png';
-import {Layout, Typography, Button} from 'antd';
+import {Layout} from 'antd';
 import NavBar from './components/NavBar';
 import GuestNavBar from './components/GuestNavBar';
+import Desc from './components/Desc';
+import GuestDesc from './components/GuestDesc';
 
-const {Title} = Typography;
 const {Content} = Layout;
 
 const App = () => (
@@ -27,6 +28,7 @@ const App = () => (
     <Route exact path="/login" component={withRouter(Login)} />
     <Route exact path="/register" component={withRouter(Register)} />
     <Route exact path="/logout" component={withRouter(Logout)} />
+    <Route exact path="/addBookToList" component={withRouter(AddBookToList)} />
     </Switch>
   </Router>
 );
@@ -39,21 +41,19 @@ function Home() {
       return <GuestNavBar />
     }
   }
+  const renderHome = () => {
+    if(localStorage.getItem('token')){
+      return <Desc />
+    } else{
+      return <GuestDesc />
+    }
+  }
   return (
     <div className="App">
       <Layout>
         {renderNavBar()}
         <Content>
-          <br></br>
-          <img src={logo} alt={""}/>
-          <br></br>
-          <br></br>
-          <Title> Welcome to BookKeeper!</Title>
-          <Title level={4}>Keep track of books you've read and plan to read.</Title>
-          <Title level={4}>Works with traditional books and webnovels.</Title>
-          <Title level={4}>Login or Create an Account Here!</Title>
-          <br></br>
-          <Button type="primary" size={'large'}><Link to="/login">Login</Link></Button>
+          {renderHome()}
         </Content>
       </Layout>
     </div>

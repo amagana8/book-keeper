@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import NavBar from './components/NavBar';
 import './App.css';
-import {Layout, Table} from 'antd';
+import {Layout, Table, Button} from 'antd';
 import axios from 'axios';
 
 const {Content} = Layout;
@@ -30,13 +31,40 @@ const MyList = () => {
 						Status: row.status,
                         Rating: row.bookRating,
                         Chapters: row.chaptersRead,
-                        id: row.bookID
+                        id: row.bookListID
                     }))
                 );
             }
 		);
     };
     
+    const history = useHistory();
+    async function handleDel(record) {
+        let token = localStorage.getItem('token');
+	    token = "Token " + token;
+        var config = {
+            method: 'delete',
+            url: 'http://localhost:8000/api/bookList/' + record.id + '/',
+            headers: { 
+              'Authorization': token
+            }
+          };
+          
+          axios(config)
+          .then(function (response) {
+            window.location.reload(false);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    async function handleEdit(record) {
+        localStorage.setItem("ListID", record.id);
+        localStorage.setItem("title", record.Title);
+        history.push("/addBookToList");
+    }
+
     const columns = [
         {
             title: "Title",
@@ -57,6 +85,16 @@ const MyList = () => {
             title: "Chapters",
             dataIndex: "Chapters",
             width: 100
+        },
+        {
+            title: 'Edit',
+            key: 'action',
+            width: 100,
+            render: (record) => (
+                <div>
+                <a><Button onClick={() => {handleEdit(record)}}>Edit</Button> <Button danger onClick={() => {handleDel(record)}}>Remove</Button></a>
+                </div>
+            )
         }
     ];
 

@@ -1,9 +1,12 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import NavBar from './components/NavBar';
 import './App.css';
-import {Layout, Form, Input, InputNumber, Button} from 'antd';
+import {Layout, Form, Input, InputNumber, Button, Select} from 'antd';
+import axios from 'axios';
 
 const {Content} = Layout;
+const { Option } = Select;
 
 const layout = {
     labelCol: { span: 8 },
@@ -18,8 +21,21 @@ const validateMessages = {
 };
 
 const AddBook = () => {
+    const history = useHistory();
     async function onFinish(values) {
-
+        let bookData = {
+            "title": values.title,
+            "title2": values.title2,
+            "author": values.author,
+            "language": values.language,
+            "bookType": values.bookType,
+            "genre": values.genre,
+            "wordCount": values.wordCount,
+            "ISBN": values.ISBN,
+            "summary": values.summary
+        }
+        await axios.post("http://localhost:8000/api/book/", bookData);
+        history.push("/browse");
     };
 
     return (
@@ -30,31 +46,40 @@ const AddBook = () => {
                 <br></br>
                 <h2>Add a new book to the database.</h2>
                 <Form {...layout} name="nest-messages"  onFinish={onFinish} style={{width: '75%'}} validateMessages={validateMessages}>
-                    <Form.Item name={['data', 'title']} label="Title" rules={[{ required: true }]}>
+                    <Form.Item name="title" label="Title" rules={[{ required: true }]}>
                         <Input style={{width: '75%'}} />
                     </Form.Item>
-                    <Form.Item name={['data', 'title2']} label="Native/Alternate Title">
+                    <Form.Item name="title2" label="Native/Alternate Title">
                         <Input style={{width: '75%'}} />
                     </Form.Item>
-                    <Form.Item name={['data', 'author']} label="Author">
+                    <Form.Item name="author" label="Author">
                         <Input style={{width: '35%'}} />
                     </Form.Item>
-                    <Form.Item name={['data', 'language']} label="Language">
+                    <Form.Item name="language" label="Language">
                         <Input style={{width: '35%'}} />
                     </Form.Item>
-                    <Form.Item name={['data', 'bookType']} label="Book Type">
+                    <Form.Item name="bookType" label="Book Type">
                         <Input style={{width: '35%'}} />
                     </Form.Item>
-                    <Form.Item name={['data', 'genre']} label="Genre">
-                        <Input style={{width: '35%'}} />
+                    <Form.Item name="genre" label="Genre">
+                        <Select placeholder="Select genre" style={{width: '35%'}}>
+                                <Option value="Fantasy">Fantasy</Option>
+                                <Option value="Horror">Horror</Option>
+                                <Option value="Humor">Humor</Option>
+                                <Option value="Mystery">Mystery</Option>
+                                <Option value="Nonfiction">Nonfiction</Option>
+                                <Option value="Romance">Romance</Option>
+                                <Option value="Sci-fi">Sci-fi</Option>
+                                <Option value="Thriller">Thriller</Option>
+                            </Select>
                     </Form.Item>
-                    <Form.Item name={['data', 'wordCount']} label="Word/Character Count" rules={[{ type: 'number' }]}>
+                    <Form.Item name="wordCount" label="Word/Character Count" rules={[{ type: 'number' }]}>
                         <InputNumber />
                     </Form.Item>
-                    <Form.Item name={['data', 'ISBN']} label="ISBN" rules={[{ type: 'number' }]}>
+                    <Form.Item name="ISBN" label="ISBN" rules={[{ type: 'number' }]}>
                         <InputNumber style={{width: '35%'}} />
                     </Form.Item>
-                    <Form.Item name={['data', 'summary']} label="Summary">
+                    <Form.Item name="summary" label="Summary">
                         <Input.TextArea />
                     </Form.Item>
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>

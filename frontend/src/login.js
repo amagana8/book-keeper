@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import NavBar from './components/NavBar';
+import {Link, useHistory} from 'react-router-dom';
+import GuestNavBar from './components/GuestNavBar';
 import axios from 'axios';
 import './App.css';
 import {Layout, Form, Input, Button} from 'antd';
 
 const {Content} = Layout;
-
 
 const layout = {
     labelCol: { span: 8 },
@@ -18,6 +17,7 @@ const tailLayout = {
 };
 
 const Login = () => {
+    const history = useHistory();
     async function onFinish(values) {
         let loginData = {
             "username": values.username,
@@ -26,6 +26,20 @@ const Login = () => {
         let response = await axios.post('http://127.0.0.1:8000/api/auth/login', loginData);
         let token = response.data.token;
         localStorage.setItem('token', token);
+
+        token = localStorage.getItem('token');
+	    token = "Token " + token;
+        let config = {
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }
+        response = await axios.get("http://127.0.0.1:8000/api/auth/user", config);
+        let user = response.data.id;
+        localStorage.setItem('user', user);
+        
+        history.push("/myList");
       };
     
     const onFinishFailed = errorInfo => {
@@ -35,7 +49,7 @@ const Login = () => {
     return (
     <div className="App">
         <Layout>
-            <NavBar />
+            <GuestNavBar />
             <Content>
             <br></br>
             <h2>Login to BookKeeper</h2>

@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import './App.css';
-import {Layout, Table} from 'antd';
+import {Layout, Table, Button} from 'antd';
 import NavBar from './components/NavBar';
+import GuestNavBar from './components/GuestNavBar';
 import axios from 'axios';
 
 const {Content} = Layout;
@@ -12,7 +14,6 @@ const Browse = () => {
     useEffect(() => {
         getData();
     }, []);
-
     const getData = async () => {
         await axios.get("http://localhost:8000/api/book/").then(
             res => {
@@ -31,7 +32,12 @@ const Browse = () => {
             }
         );
     };
-    
+    const history = useHistory();
+    async function handleClick(record) {
+        localStorage.setItem('title', record.Title);
+        history.push("/addBooktoList");
+    }
+
     const columns = [
         {
             title: "Title",
@@ -62,13 +68,28 @@ const Browse = () => {
             title: "Genre",
             dataIndex: "Genre",
             width: 100
+        },
+        {
+            title: 'Add',
+            key: 'action',
+            width: 100,
+            render: (record) => (
+                <a><Button onClick={() => {handleClick(record)}} type="primary">Add to Your List</Button></a>
+            )
         }
     ];
 
+    const renderNavBar = () => {
+        if(localStorage.getItem('token')){
+          return <NavBar />
+        } else{
+          return <GuestNavBar />
+        }
+      }
     return (
         <div className="Browse">
             <Layout>
-                <NavBar />
+                {renderNavBar()}
                 <Content>
                     <div>
                         {loading ? (
