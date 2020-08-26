@@ -1,12 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import GuestNavBar from './components/GuestNavBar';
 import './App.css';
-import {Layout, Menu, Form, Input, Button} from 'antd';
+import {Layout, Form, Input, Button} from 'antd';
+import axios from 'axios';
 
-const {Header, Content} = Layout;
+const {Content} = Layout;
 
 const validateMessages = {
-    required: '${label} is required!',
     types: {
         email: 'That is not a valid email!'
     }
@@ -22,8 +22,13 @@ const tailLayout = {
 };
 
 function Register() {
-    const onFinish = values => {
-        console.log('Success:', values);
+    async function onFinish(values) {
+        let registerData = {
+            "username": values.username,
+            "email": values.email,
+            "password": values.password
+        }
+        await axios.post("http://127.0.0.1:8000/api/auth/register", registerData);
       };
     
     const onFinishFailed = errorInfo => {
@@ -33,16 +38,7 @@ function Register() {
     return (
     <div className="App">
         <Layout>
-            <Header>
-            <div className="logo" />
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['5']}>
-                <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-                <Menu.Item key="2"><Link to="/browse">Browse</Link></Menu.Item>
-                <Menu.Item key="3"><Link to="/myList">My List</Link></Menu.Item>
-                <Menu.Item key="4"><Link to="/addBook">Add Book</Link></Menu.Item>
-                <Menu.Item key="5"><Link to="/login">Login</Link></Menu.Item>
-            </Menu>
-            </Header>
+            <GuestNavBar />
             <Content>
             <br></br>
             <h2>Signup for BookKeeper</h2>
@@ -55,30 +51,33 @@ function Register() {
                 validateMessages={validateMessages}
                 style={{width: '75%'}}
             >
-                 <Form.Item name={['user', 'email']} label="Email" rules={[{ required: true, type: 'email' }]}>
+                <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[{ type: 'email', required: true, message:"Please input your email!" }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Username"
+                    name="username"
+                    rules={[{ required: true, message: 'Please input your username!' }]}
+                >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                    label="Password"
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
                 >
-                <Input />
-                </Form.Item>
-
-                <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                <Input.Password />
+                    <Input.Password />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit">
-                    Login
-                </Button>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
                 </Form.Item>
             </Form>
             </Content>

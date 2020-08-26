@@ -7,11 +7,15 @@ import MyList from './myList';
 import AddBook from './addBook';
 import Login from './login';
 import Register from './register';
+import Logout from './logout';
 import './App.css';
-import {Layout, Menu} from 'antd';
+import logo from'./bookKeeper.png';
+import {Layout, Typography, Button} from 'antd';
+import NavBar from './components/NavBar';
+import GuestNavBar from './components/GuestNavBar';
 
-
-const {Header, Content} = Layout;
+const {Title} = Typography;
+const {Content} = Layout;
 
 const App = () => (
   <Router>
@@ -22,25 +26,34 @@ const App = () => (
     <Route expact path="/addBook" component={withRouter(AddBook)} />
     <Route exact path="/login" component={withRouter(Login)} />
     <Route exact path="/register" component={withRouter(Register)} />
+    <Route exact path="/logout" component={withRouter(Logout)} />
     </Switch>
   </Router>
 );
 
 function Home() {
+  const renderNavBar = () => {
+    if(localStorage.getItem('token')){
+      return <NavBar />
+    } else{
+      return <GuestNavBar />
+    }
+  }
   return (
     <div className="App">
       <Layout>
-        <Header>
-          <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-            <Menu.Item key="2"><Link to="/browse">Browse</Link></Menu.Item>
-            <Menu.Item key="3"><Link to="/myList">My List</Link></Menu.Item>
-            <Menu.Item key="4"><Link to="/addBook">Add Book</Link></Menu.Item>
-            <Menu.Item key="5"><Link to="/login">Login</Link></Menu.Item>
-          </Menu>
-        </Header>
+        {renderNavBar()}
         <Content>
+          <br></br>
+          <img src={logo} alt={""}/>
+          <br></br>
+          <br></br>
+          <Title> Welcome to BookKeeper!</Title>
+          <Title level={4}>Keep track of books you've read and plan to read.</Title>
+          <Title level={4}>Works with traditional books and webnovels.</Title>
+          <Title level={4}>Login or Create an Account Here!</Title>
+          <br></br>
+          <Button type="primary" size={'large'}><Link to="/login">Login</Link></Button>
         </Content>
       </Layout>
     </div>

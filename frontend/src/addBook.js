@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import NavBar from './components/NavBar';
 import './App.css';
-import {Layout, Menu, Form, Input, InputNumber, Button} from 'antd';
+import {Layout, Form, Input, InputNumber, Button} from 'antd';
 
-const {Header, Content} = Layout;
+const {Content} = Layout;
 
 const layout = {
     labelCol: { span: 8 },
@@ -25,15 +25,7 @@ const AddBook = () => {
     return (
         <div className="AddBook">
           <Layout>
-            <Header>
-              <div className="logo" />
-              <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['4']}>
-                <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-                <Menu.Item key="2"><Link to="/browse">Browse</Link></Menu.Item>
-                <Menu.Item key="3"><Link to="/myList">My List</Link></Menu.Item>
-                <Menu.Item key="4"><Link to="/addBook">Add Book</Link></Menu.Item>
-              </Menu>
-            </Header>
+            <NavBar />
             <Content>
                 <br></br>
                 <h2>Add a new book to the database.</h2>

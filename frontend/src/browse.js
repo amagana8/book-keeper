@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
 import './App.css';
-import {Layout, Menu, Table} from 'antd';
+import {Layout, Table} from 'antd';
+import NavBar from './components/NavBar';
 import axios from 'axios';
 
-const {Header, Content} = Layout;
+const {Content} = Layout;
 
 const Browse = () => {
     const [state, setstate] = useState([]);
@@ -68,15 +68,7 @@ const Browse = () => {
     return (
         <div className="Browse">
             <Layout>
-                <Header>
-                    <div className="logo" />
-                    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-                        <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-                        <Menu.Item key="2"><Link to="/browse">Browse</Link></Menu.Item>
-                        <Menu.Item key="3"><Link to="/myList">My List</Link></Menu.Item>
-                        <Menu.Item key="4"><Link to="/addBook">Add Book</Link></Menu.Item>
-                    </Menu>
-                </Header>
+                <NavBar />
                 <Content>
                     <div>
                         {loading ? (
