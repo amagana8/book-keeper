@@ -35,7 +35,7 @@ const AddBookToList = () => {
 
         var config = {
             method: 'post',
-            url: 'http://localhost:8000/api/bookList/',
+            url: 'https://app-book-keeper.herokuapp.com/api/bookList/',
             headers: { 
                 'Content-Type': 'application/json', 
                 'Authorization': token

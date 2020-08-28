@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import GuestNavBar from './components/GuestNavBar';
 import './App.css';
 import {Layout, Form, Input, Button} from 'antd';
@@ -22,13 +23,30 @@ const tailLayout = {
 };
 
 function Register() {
+    const history = useHistory();
     async function onFinish(values) {
         let registerData = {
             "username": values.username,
             "email": values.email,
             "password": values.password
         }
-        await axios.post("http://127.0.0.1:8000/api/auth/register", registerData);
+        let response = await axios.post("https://app-book-keeper.herokuapp.com/api/auth/register", registerData);
+        let token = response.data.token;
+        localStorage.setItem('token', token);
+
+        token = localStorage.getItem('token');
+	    token = "Token " + token;
+        let config = {
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }
+        response = await axios.get("https://app-book-keeper.herokuapp.com/api/auth/user", config);
+        let user = response.data.id;
+        localStorage.setItem('user', user);
+        
+        history.push("/myList");
       };
     
     const onFinishFailed = errorInfo => {

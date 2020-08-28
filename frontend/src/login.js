@@ -23,7 +23,7 @@ const Login = () => {
             "username": values.username,
             "password": values.password
         }
-        let response = await axios.post('http://127.0.0.1:8000/api/auth/login', loginData);
+        let response = await axios.post('https://app-book-keeper.herokuapp.com/api/auth/login', loginData);
         let token = response.data.token;
         localStorage.setItem('token', token);
 
@@ -35,7 +35,7 @@ const Login = () => {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
-        response = await axios.get("http://127.0.0.1:8000/api/auth/user", config);
+        response = await axios.get("https://app-book-keeper.herokuapp.com/api/auth/user", config);
         let user = response.data.id;
         localStorage.setItem('user', user);
         

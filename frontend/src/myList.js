@@ -22,7 +22,7 @@ const MyList = () => {
 		}
 	}
     const getData = async () => {
-        await axios.get("http://localhost:8000/api/bookList/", config).then(
+        await axios.get("https://app-book-keeper.herokuapp.com/api/bookList/", config).then(
 			res => {
 				setloading(false);
 				setstate(
@@ -44,7 +44,7 @@ const MyList = () => {
 	    token = "Token " + token;
         var config = {
             method: 'delete',
-            url: 'http://localhost:8000/api/bookList/' + record.id + '/',
+            url: 'https://app-book-keeper.herokuapp.com/api/bookList/' + record.id + '/',
             headers: { 
               'Authorization': token
             }
@@ -111,7 +111,6 @@ const MyList = () => {
 						columns={columns}
 						dataSource={state}
 						pagination={{ pageSize: 50 }}
-						scroll={{ y: 240 }}
 						/>
 					)}
               	</div>

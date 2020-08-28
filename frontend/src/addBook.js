@@ -34,7 +34,7 @@ const AddBook = () => {
             "ISBN": values.ISBN,
             "summary": values.summary
         }
-        await axios.post("http://localhost:8000/api/book/", bookData);
+        await axios.post("https://app-book-keeper.herokuapp.com/api/book/", bookData);
         history.push("/browse");
     };
 
@@ -44,7 +44,7 @@ const AddBook = () => {
             <NavBar />
             <Content>
                 <br></br>
-                <h2>Add a new book to the database.</h2>
+                <h2 className="App">Add a new book to the database.</h2>
                 <Form {...layout} name="nest-messages"  onFinish={onFinish} style={{width: '75%'}} validateMessages={validateMessages}>
                     <Form.Item name="title" label="Title" rules={[{ required: true }]}>
                         <Input style={{width: '75%'}} />

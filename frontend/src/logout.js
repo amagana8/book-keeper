@@ -15,7 +15,7 @@ const Logout = () => {
                 'Authorization': token,
             }
         }
-        await axios.post("http://127.0.0.1:8000/api/auth/logout", config);
+        await axios.post("https://app-book-keeper.herokuapp.com/api/auth/logout", config);
     }
     logout();
     localStorage.clear();

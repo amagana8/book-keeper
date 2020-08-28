@@ -15,7 +15,7 @@ const Browse = () => {
         getData();
     }, []);
     const getData = async () => {
-        await axios.get("http://localhost:8000/api/book/").then(
+        await axios.get("https://app-book-keeper.herokuapp.com/api/book/").then(
             res => {
                 setloading(false);
                 setstate(
@@ -99,7 +99,6 @@ const Browse = () => {
                             columns={columns}
                             dataSource={state}
                             pagination={{ pageSize: 50 }}
-                            scroll={{ y: 240 }}
                             />
                         )}
                     </div>
