@@ -1,4 +1,4 @@
-# Book-List
+# Book-Keeper
 A database driven web app to keep track of books you've read or plan to read.\
 Built with SQLite, Django, React, and Node.js.
 
